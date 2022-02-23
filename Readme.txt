@@ -27,4 +27,56 @@ Step 2.
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
 4. Create new controllers using Entity Framework with models and views
 
+Step 3.
+1. Add support for Azure Redis
+	  <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+	  <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
+3. Add the cache connection string to appsettings.json
+4. Dependency inject the cache connection using startup.cs
+5. Update the CustomersController to fetch the list from redis
 
+
+Step 4.
+Create an Azure AD app registration
+value
+MB07Q~n.YjzdF_pmpQ0xrw_qYy5uZ4P6DfszT
+ID
+e677dd93-e241-4f73-9a53-afaf35ddeb63
+1. In appsettings.json:
+     "AzureAd": {
+        "Instance": "https://login.microsoftonline.com/",
+        "Domain": "siddharthdwngmail.onmicrosoft.com",
+        "TenantId": "0e97f85a-b424-40f3-8fcc-bdde6023332e",
+        "ClientId": "8fa7b6f3-3378-43b0-ad32-2dcffb3131e2",
+        "CallbackPath": "/signin-oidc"
+      }
+
+2. Add support for Azure AD
+ <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0" />
+ <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.1.0" />
+ <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.9" />
+ 
+3. Update startup.cs
+In the ConfigureServices method:
+services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+            services.AddRazorPages()
+                 .AddMicrosoftIdentityUI();
+                 
+services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always;
+            });
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+                
+In the configure method:
+ app.UseCookiePolicy();
+ app.UseAuthentication();
+                
+        
