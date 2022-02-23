@@ -23,7 +23,7 @@ Step 2.
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
-3. Scaffold the DB context
+3. Scaffold the DB context - run the below command in the visual studio package manager console:
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
 4. Create new controllers using Entity Framework with models and views
 
