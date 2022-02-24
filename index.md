@@ -181,7 +181,7 @@ https://1drv.ms/u/s!AjKtnZen93C0nRWh0myuo4CTCqyH?e=haO08c
 
 
 **Technical Requirements:**
-- You must develop this application using ASP .NET, where a list of Clients and Properties is visible to authenticated users with all the CRUD operations. 
+- You must develop this application using ASP .NET, where a list of Cookies, Stores and Orders is visible to authenticated users with all the CRUD operations. 
 - Use Azure SQL Database as a Service to create a database with this refrence project: https://github.com/Developing-Scalable-Apps-using-Azure/International-Bakers/tree/master/InternationalCookies.DataBase/
 - Improve the application performance by using a suitable caching mechanism. 
 - Ensure auto scaling based on CPU utilization.
