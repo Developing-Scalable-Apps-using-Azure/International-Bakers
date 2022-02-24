@@ -186,6 +186,8 @@ https://1drv.ms/u/s!AjKtnZen93C0nRWh0myuo4CTCqyH?e=haO08c
 - Improve the application performance by using a suitable caching mechanism. 
 - Ensure auto scaling based on CPU utilization.
 - All the cookie images have to be uploaded to Azure Storage. 
+- Add a status column to the dbo.Stores
+- Create an automated workflow for onboardong a new store to your application where the status changes from 'Under Review' to 'Onboarded' based on an email approval.
 - Implement a DNS based caching mechanism for loading these images faster, thereby improving application performance. 
 - Ensure that application level Logging and Web Server Level Logging is in place for the deployed application. 
 - Enable Application level monitoring. 
