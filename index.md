@@ -170,7 +170,7 @@ This lab covers the below dimensions of AKS and GitHub:
 6. Integration with Azure AD
 
 The proof of executions for this lab are requested to be uploaded to the below location:
-https://1drv.ms/u/s!AjKtnZen93C0nRWh0myuo4CTCqyH?e=haO08c
+https://1drv.ms/u/s!AjKtnZen93C0p1nsYb_qPc-mTwaO?e=8C7aWR
 
 **Business Requirements:**
 
