@@ -26,6 +26,11 @@ Step 2.
 3. Scaffold the DB context - run the below command in the visual studio package manager console:
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
 4. Create new controllers using Entity Framework with models and views
+5. Dependency injectr the connection string using startup.json
+```
+    services.AddDbContext<ibdb01Context>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("ibdb01")));
+```
 
 Step 3.
 1. Add support for Azure Redis
@@ -33,7 +38,31 @@ Step 3.
 	  <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
 3. Add the cache connection string to appsettings.json
 4. Dependency inject the cache connection using startup.cs
+```
+            services.AddDistributedRedisCache(option => {
+                option.Configuration = Configuration.GetConnectionString("ibcache01");
+                option.InstanceName = "master";
+```
 5. Update the CustomersController to fetch the list from redis
+```
+ public async Task<IActionResult> Index()
+        {
+            List<Cookie> cookies;
+            var cachedCookies = _cache.GetString("cookieList");
+
+            if (!string.IsNullOrEmpty(cachedCookies))
+            {
+                cookies = JsonConvert.DeserializeObject<List<Cookie>>(cachedCookies);
+            }
+            else
+            {
+                cookies = _context.Cookies.ToList();
+                _cache.SetString("cookieList", JsonConvert.SerializeObject(cookies));
+            }
+
+            return View(cookies);
+        }
+```
 
 
 Step 4.
