@@ -1,8 +1,9 @@
 Step 1.
-1. Create a SQL database project
-2. Add the required tables and post-deployment scripts to this
-3. Publish this project to your Azure SQL instance
-4. Create application users and assign permissions
+1. Provision a Basic tier Azure Database instance on the Azure Portal
+2. Create a SQL database project
+3. Add the required tables and post-deployment scripts to this
+4. Publish this project to your Azure SQL instance
+5. Create application users and assign permissions
 ```
 CREATE USER applicationUser with PASSWORD = 'App1234567'
 GRANT select, insert, update, delete to applicationUser
