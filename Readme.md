@@ -65,9 +65,9 @@ Step 3.
 Step 4.
 Create an Azure AD app registration
 value
-MB07Q~n.YjzdF_pmpQ0xrw_qYy5uZ4P6DfszT
+S3h8Q~d7p835hKkVQMMBh2sZ1LIkhGUm1Jpd6cst
 ID
-e677dd93-e241-4f73-9a53-afaf35ddeb63
+fc0ec619-e702-4c8a-9c7f-78ba3685a46f
 1. In appsettings.json:
      "AzureAd": {
         "Instance": "https://login.microsoftonline.com/",
