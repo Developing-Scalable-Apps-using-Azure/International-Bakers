@@ -109,11 +109,39 @@ In the configure method:
 app.UseCookiePolicy();
 app.UseAuthentication();
 ```                
-	
+Step 5.
+Add _LoginPartial.cshtml to the views -> shared directory
+```
+@using System.Security.Principal
+
+<ul class="navbar-nav">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <span class="navbar-text text-dark">Hello @User.Identity.Name!</span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
+        </li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+
+    }
+</ul>
+```
+Add partial layout in the _Layout.cshtml file for sign in/out:
+```
+	<partial name="_LoginPartial" />
+```
 
 	
 
-Sample Commands - Do not run directly
+Sample scaffolding Commands - Do not run directly
 ```
 dotnet ef dbcontext scaffold "Server=tcp:ibdbserver.database.windows.net,1433;Initial Catalog=ibdb;Persist Security Info=False;User ID=adminuser;Password=Admin1234567;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 Scaffold-DbContext "Server=tcp:ibdbserver.database.windows.net,1433;Initial Catalog=ibdb;Persist Security Info=False;User ID=adminuser;Password=Admin1234567;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
