@@ -2,9 +2,6 @@ dotnet ef dbcontext scaffold "Server=tcp:ibdbserver.database.windows.net,1433;In
 Scaffold-DbContext "Server=tcp:ibdbserver.database.windows.net,1433;Initial Catalog=ibdb;Persist Security Info=False;User ID=adminuser;Password=Admin1234567;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 Scaffold-DbContext "Server=tcp:ibdbserver.database.windows.net,1433;Initial Catalog=ibdb;Persist Security Info=False;User ID=adminuser;Password=Admin1234567;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations |
 
-CREATE USER applicationUser with PASSWORD = 'App1234567'
-
-GRANT select, insert, update, delete to applicationUser
 
 
 
@@ -13,6 +10,11 @@ Step 1.
 1. Create a SQL database project
 2. Add the required tables and post-deployment scripts to this
 3. Publish this project to your Azure SQL instance
+4. Create application users and assign permissions
+```
+CREATE USER applicationUser with PASSWORD = 'App1234567'
+GRANT select, insert, update, delete to applicationUser
+```
 
 Step 2.
 1. Create a new .NET core MVC project 
@@ -24,7 +26,9 @@ Step 2.
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
 3. Scaffold the DB context - run the below command in the visual studio package manager console:
+```
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
+```
 4. Create new controllers using Entity Framework with models and views
 5. Dependency injectr the connection string using startup.json
 ```
@@ -81,12 +85,14 @@ e677dd93-e241-4f73-9a53-afaf35ddeb63
       }
 
 2. Add support for Azure AD
+```
  <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0" />
  <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.1.0" />
  <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.9" />
- 
+ ```
 3. Update startup.cs
 In the ConfigureServices method:
+```
 services.AddControllersWithViews(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -103,9 +109,11 @@ services.Configure<CookiePolicyOptions>(options =>
             });
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
-                
+```         
 In the configure method:
- app.UseCookiePolicy();
- app.UseAuthentication();
-                
+ 
+```
+app.UseCookiePolicy();
+app.UseAuthentication();
+```                
         
