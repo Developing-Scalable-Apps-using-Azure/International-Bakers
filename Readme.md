@@ -1,4 +1,49 @@
-Step 1.
+# This lab will help you create a sample .Net application using Azure PaaS services.
+
+## Services used:
+
+- [Azure App Services](https://azure.microsoft.com/en-us/products/app-service/)
+- [Azure SQL](https://azure.microsoft.com/en-in/products/azure-sql/database/)
+- [Azure Cache for Redis](https://azure.microsoft.com/en-in/products/cache/)
+- [Azure Active Directory](https://azure.microsoft.com/en-us/products/active-directory/)
+- [Azure Storage](https://azure.microsoft.com/en-us/products/category/storage/)
+
+### Pre-Requisite - Provision an Azure SQL single database
+
+```
+subscription="b214611b-9a79-4e7e-afb0-3d9785737f10" # add subscription here
+
+az account set -s $subscription # ...or use 'az login'
+```
+```
+# Create a single database and configure a firewall rule
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+location="East US"
+resourceGroup="Sid-RG-01"
+tag="create-and-configure-database"
+server="sb-azuresql-server-$randomIdentifier"
+database="sbazuresqldb$randomIdentifier"
+login="azureuser"
+password="Admin@1234567"
+# Specify appropriate IP address values for your environment
+# to limit access to the SQL Database server
+startIp=0.0.0.0
+endIp=255.255.255.255
+
+echo "Using resource group $resourceGroup with login: $login, password: $password..."
+echo "Creating $resourceGroup in $location..."
+az group create --name $resourceGroup --location "$location" --tags $tag
+echo "Creating $server in $location..."
+az sql server create --name $server --resource-group $resourceGroup --location "$location" --admin-user $login --admin-password $password
+echo "Configuring firewall..."
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
+echo "Creating $database on $server..."
+az sql db create --resource-group $resourceGroup --server $server --name $database --sample-name AdventureWorksLT --edition Basic --capacity 5
+
+```
+
+## Step 1.
 1. Provision a Basic tier Azure Database instance on the Azure Portal
 2. Create a SQL database project
 3. Add the required tables and post-deployment scripts to this
@@ -9,7 +54,7 @@ CREATE USER applicationUser with PASSWORD = 'App1234567'
 GRANT select, insert, update, delete to applicationUser
 ```
 
-Step 2.
+## Step 2.
 1. Create a new .NET core MVC project 
 2. Install the nuget packages
 ```
@@ -31,7 +76,7 @@ Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer 
     options.UseSqlServer(Configuration.GetConnectionString("ibdb01")));
 ```
 
-Step 3.
+## Step 3.
 1. Add support for Azure Redis
 	  <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
 	  <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
@@ -64,7 +109,7 @@ Step 3.
 ```
 
 
-Step 4.
+## Step 4.
 Create an Azure AD app registration
 value
 S3h8Q~d7p835hKkVQMMBh2sZ1LIkhGUm1Jpd6cst
@@ -111,7 +156,7 @@ In the configure method:
 app.UseCookiePolicy();
 app.UseAuthentication();
 ```                
-Step 5.
+## Step 5.
 Add _LoginPartial.cshtml to the views -> shared directory
 ```
 @using System.Security.Principal
