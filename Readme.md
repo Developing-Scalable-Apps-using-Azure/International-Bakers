@@ -82,7 +82,7 @@ Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer 
 4. Create new controllers using Entity Framework with models and views
 5. Dependency inject the connection string:
 
-In <DBContext>.cs
+In DBContext.cs
 ```
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -105,6 +105,7 @@ In appsettings.json
 "ConnectionStrings": {
 "ibdb": "Server=tcp:sb-azuresql-server-286930812.database.windows.net,1433;Initial Catalog=<your-database-name>;Persist Security Info=False;User ID=azureuser;Password=Admin@1234567;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   }
+```
 
 ## Step 3.
 1. Add support for Azure Redis
