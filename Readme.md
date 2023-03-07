@@ -45,8 +45,12 @@ az sql db create --resource-group $resourceGroup --server $server --name $databa
 
 ## Step 1.
 1. Provision a Basic tier Azure Database instance on the Azure Portal
-2. Create a SQL database project
-3. Add the required tables and post-deployment scripts to this
+2. Create a SQL database project 
+3. Add the required tables and post-deployment scripts to this:
+
+- [Scripts](https://github.com/Developing-Scalable-Apps-using-Azure/International-Bakers/tree/master/InternationalCookies.DataBase/Scripts)
+- [Tables](https://github.com/Developing-Scalable-Apps-using-Azure/International-Bakers/tree/master/InternationalCookies.DataBase/Tables)
+
 4. Publish this project to your Azure SQL instance
 5. Create application users and assign permissions
 ```
@@ -70,6 +74,7 @@ GRANT select, insert, update, delete to applicationUser
     </PackageReference>
   </ItemGroup>
   ```
+3. Add an "images" folder in wwwroot. Upload - [cookies image](https://github.com/Developing-Scalable-Apps-using-Azure/International-Bakers/blob/master/InternationalBakers/wwwroot/images/cookie.jpg)
 3. Scaffold the DB context - run the below command in the visual studio package manager console:
 ```
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
