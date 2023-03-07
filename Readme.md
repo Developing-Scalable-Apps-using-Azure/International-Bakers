@@ -75,12 +75,12 @@ GRANT select, insert, update, delete to applicationUser
   </ItemGroup>
   ```
 3. Add an "images" folder in wwwroot. Upload - [cookies image](https://github.com/Developing-Scalable-Apps-using-Azure/International-Bakers/blob/master/InternationalBakers/wwwroot/images/cookie.jpg)
-3. Scaffold the DB context - run the below command in the visual studio package manager console:
+4. Scaffold the DB context - run the below command in the visual studio package manager console:
 ```
 Scaffold-DbContext "<your conn string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir "Data" -DataAnnotations
 ```
-4. Create new controllers using Entity Framework with models and views
-5. Dependency inject the connection string:
+5. Create new controllers using Entity Framework with models and views
+6. Dependency inject the connection string:
 
 In DBContext.cs
 ```
@@ -123,7 +123,17 @@ builder.Services.AddStackExchangeRedisCache(option =>
     option.InstanceName = "master";
 });
 ```
-5. Update the CustomersController to fetch the list from redis
+5. Initialize _cache
+```
+private readonly IDistributedCache _cache;
+
+        public CookiesController(sbazuresqldb286930812Context context, IDistributedCache cache)
+        {
+            _context = context;
+            _cache = cache;
+        }
+```
+6. Update the CustomersController to fetch the list from redis
 ```
  public async Task<IActionResult> Index()
         {
