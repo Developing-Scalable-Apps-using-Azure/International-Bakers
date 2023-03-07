@@ -109,14 +109,19 @@ In appsettings.json
 
 ## Step 3.
 1. Add support for Azure Redis
+```
 	  <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
 	  <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
+``` 
 3. Add the cache connection string to appsettings.json
-4. Dependency inject the cache connection using startup.cs
+4. Dependency inject the cache connection using Program.cs
 ```
-            services.AddDistributedRedisCache(option => {
-                option.Configuration = Configuration.GetConnectionString("ibcache01");
-                option.InstanceName = "master";
+builder.Services.AddStackExchangeRedisCache(option =>
+{
+    option.Configuration = builder.Configuration.GetConnectionString
+        ("ibcache");
+    option.InstanceName = "master";
+});
 ```
 5. Update the CustomersController to fetch the list from redis
 ```
