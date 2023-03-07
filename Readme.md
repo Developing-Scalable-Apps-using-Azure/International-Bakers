@@ -1,4 +1,4 @@
-# This lab will help you create a sample .Net application using Azure PaaS services.
+# This lab will help you create a .Net application using Azure PaaS services.
 
 ## Services used:
 
