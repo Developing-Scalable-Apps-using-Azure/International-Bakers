@@ -58,12 +58,17 @@ GRANT select, insert, update, delete to applicationUser
 1. Create a new .NET core MVC project 
 2. Install the nuget packages
 ```
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
+ <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
   ```
 3. Scaffold the DB context - run the below command in the visual studio package manager console:
 ```
